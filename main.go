@@ -80,8 +80,6 @@ func main() {
 			onSale = true
 		}
 
-		onSale = true
-
 		c.HTML(200, "index.html", gin.H{"pizzas": pizzas, "status": Status{OnSale: onSale, Price: pizzas[0].Price}})
 	})
 
