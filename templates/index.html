@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+  .marquee {
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 5s linear infinite;
+    transform: rotate(45deg);
+    height: 100%;
+  }
+
+  .marquee2 span {
+    animation-delay: 1s;
+    color: red;
+  }
+
+  .skeet {
+    animation: skeet 5s linear infinite;
+  }
+
+  .skeet-inverse {
+    animation: skeet-inverse 5s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translate(0, 0) scaleY(1.5);
+    }
+
+    100% {
+      transform: translate(-100%, 0) scaleY(1.5);
+    }
+  }
+
+  @keyframes skeet {
+    0% {
+      transform: rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1);
+    }
+
+    50% {
+      transform: rotateZ(180deg) rotateY(180deg) rotateX(180deg) scale(1.5);
+    }
+
+    100% {
+      transform: rotateZ(360deg) rotateY(360deg) rotateX(360deg) scale(1);
+    }
+  }
+
+  @keyframes skeet-inverse {
+    0% {
+      transform: rotateZ(360deg) rotateY(360deg) rotateX(360deg) scale(1);
+    }
+
+    50% {
+      transform: rotateZ(180deg) rotateY(180deg) rotateX(180deg) scale(3);
+    }
+
+    100% {
+      transform: rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(0.1);
+    }
+  }
+
+  @keyframes gradient-x {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient-x {
+    background: linear-gradient(270deg,
+        #ff0080,
+        #ff8c00,
+        #ffbf00,
+        #8cff00,
+        #00ff80,
+        #00ffff,
+        #008cff,
+        #8000ff,
+        #ff00bf,
+        #ff0080);
+    background-size: 1500% 1500%;
+    animation: gradient-x 10s ease infinite;
+  }
+
+  @keyframes text-size {
+    0% {
+      font-size: 1rem;
+    }
+
+    50% {
+      font-size: 4rem;
+    }
+
+    100% {
+      font-size: 1rem;
+    }
+  }
+
+  .animate-text-size {
+    animation: text-size 3s ease infinite;
+  }
+
+  .clear-rotate {
+    transform: rotateZ(0deg) rotateY(0deg) rotateX(0deg);
+  }
+
+  .crazy-colors {
+    width: 100%;
+    /* Adjust as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+    animation: crazy-colors 5s infinite alternate;
+  }
+
+  @keyframes crazy-colors {
+    0% {
+      filter: hue-rotate(0deg) saturate(1);
+    }
+
+    25% {
+      filter: hue-rotate(90deg) saturate(2);
+    }
+
+    50% {
+      filter: hue-rotate(180deg) saturate(1.5);
+    }
+
+    75% {
+      filter: hue-rotate(270deg) saturate(3);
+    }
+
+    100% {
+      filter: hue-rotate(360deg) saturate(1);
+    }
+  }
+</style>
+
+{{ if .status.OnSale }}
+
+<body class="animate-gradient-x">
+  <div class="w-full text-center">
+    <h1 class="text-3xl font-bold mt-3 animate-text-size">
+      PIZZA SALE PIZZA SALE!!!
+    </h1>
+    <div class="overflow-hidden whitespace-nowrap text-white py-4">
+      <div class="marquee inline-block w-full h-full">
+        <span class="text-2xl font-bold">
+          PIZZA SALE PIZZA SALE PIZZA SALE PIZZA SALE PIZZA SALE PIZZA SALE
+          PIZZA PIZZA SALE PIZZA SALE PIZZA SALE PIZZA SALE PIZZA SALE PIZZA
+          SALE PIZZA
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full flex flex-row items-center justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {{range .pizzas}}
+      <div class="mt-3 skeet hover:clear-rotate">
+        <h2 class="text-lg font-semibold mb-1">{{.Name}}</h2>
+        <img src="{{.ImageURL}}" width="200px" height="200px" class="w-full crazy-colors" />
+        <p class="text-xl font-semibold">${{.Price}}</p>
+      </div>
+      {{end}}
+    </div>
+  </div>
+
+  <div class="h-screen w-screen flex items-center justify-center fixed top-0 left-0">
+    <p class="text-[100px] z-[100] font-bold animate skeet-inverse">
+      ${{.status.Price}}
+    </p>
+  </div>
+</body>
+
+{{ else }}
+
+<body>
+  <div class="w-full text-center">
+    <h1 class="text-3xl font-bold mt-3">😭 No sale 😭</h1>
+  </div>
+
+  <div class="w-full flex flex-row items-center justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {{range .pizzas}}
+      <div class="mt-3">
+        <h2 class="text-lg font-semibold mb-1">{{.Name}}</h2>
+        <img src="{{.ImageURL}}" width="200px" height="200px" class="w-full" />
+        <p class="text-xl font-semibold">${{.Price}}</p>
+      </div>
+      {{end}}
+    </div>
+  </div>
+
+</body>
+
+
+{{end}}
+<script src="main.js"></script>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
+
+</html>
