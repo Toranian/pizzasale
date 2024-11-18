@@ -79,7 +79,6 @@ func main() {
 		if len(pizzas) > 0 && pizzas[0].Price < 5 {
 			onSale = true
 		}
-		onSale = true
 		c.HTML(200, "index.html", gin.H{"pizzas": pizzas, "status": Status{OnSale: onSale, Price: pizzas[0].Price}})
 	})
 
