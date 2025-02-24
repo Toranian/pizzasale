@@ -75,7 +75,7 @@ func main() {
 
 	r.GET("/", func(c *gin.Context) {
 		pizzas := getPizzas(PizzaURL)
-		onSale := true
+		onSale := false
 		if len(pizzas) > 0 && pizzas[0].Price < 5 {
 			onSale = true
 		}
