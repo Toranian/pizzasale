@@ -75,10 +75,11 @@ func main() {
 
 	r.GET("/", func(c *gin.Context) {
 		pizzas := getPizzas(PizzaURL)
-		onSale := false
+		onSale := true
 		if len(pizzas) > 0 && pizzas[0].Price < 5 {
 			onSale = true
 		}
+
 		c.HTML(200, "index.html", gin.H{"pizzas": pizzas, "status": Status{OnSale: onSale, Price: pizzas[0].Price}})
 	})
 
